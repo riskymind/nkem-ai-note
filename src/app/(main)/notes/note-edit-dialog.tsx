@@ -1,6 +1,6 @@
 "use client"
 
-import { useMutation } from "convex/react"
+import { useAction } from "convex/react"
 import { Doc } from "../../../../convex/_generated/dataModel"
 import { api } from "../../../../convex/_generated/api"
 import { useState } from "react"
@@ -16,13 +16,13 @@ interface NoteEditDialogProps {
 }
 
 export function NoteEditDialog({note, open, onOpenChange}: NoteEditDialogProps) {
-    const updateNote = useMutation(api.notes.updateNote)
+    const updateNote = useAction(api.notesActions.updateNote)
 
     const [title, setTitle] = useState(note.title)
     const [body, setBody] = useState(note.body)
 
     const handleSave = async ()=> {
-        await updateNote({id:note._id, title, body})
+        await updateNote({noteId:note._id, title, body})
         onOpenChange(false)
     }
 
